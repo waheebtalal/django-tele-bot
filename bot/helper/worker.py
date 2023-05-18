@@ -244,7 +244,7 @@ async def ck_user(m: Message):
         name = ((m.from_user.first_name if m.from_user.first_name else " ") + (
             m.from_user.last_name if m.from_user.last_name else " "))
         phone = m.from_user.phone_number if m.from_user.phone_number else " "
-        await TgUser(id=tg_id, username=username,
+        TgUser(id=tg_id, username=username,
                      name=name, phone=phone).save()
 
 
