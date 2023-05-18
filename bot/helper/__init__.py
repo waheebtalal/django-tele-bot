@@ -4,7 +4,7 @@ from decouple import config
 
 api = 19663899
 hash = "af0b19d19293e57b1b74cabcf6dcbbd6"
-bot = "6175157471:AAHKGHL00QrWz1WIPGa3ZFkBYihCp4-6XH4"
+bot = "1985540606:AAFn-VKlS7udRGTDkmDxGLgJdCtykq-CjVQ"
 owner = str("675889933 406793949 506779415").split()
 group = "-1001644715256"
 block = "1 2 3"
