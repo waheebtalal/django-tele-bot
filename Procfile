@@ -1,3 +1,3 @@
 bot: python3 main.py
-web: gunicorn 'db.wsgi'
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn 'db.wsgi'
 
