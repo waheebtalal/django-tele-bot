@@ -105,7 +105,7 @@ async def hello(client, message: Message):
     else:
         msg = await message.reply_text("تم الاضافة الى الطابور", quote=True, reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton(text="موقعك بالطابور", callback_data="q:" + str(message.id))],
-                 [InlineKeyboardButton(text="الغاء", callback_data="c:" + str(message.id))]]))
+             [InlineKeyboardButton(text="الغاء", callback_data="c:" + str(message.id))]]))
         await add_queue_admin([message.chat.id, message.id, msg.id])
 
 
@@ -118,8 +118,9 @@ async def h(client, message: Message):
     pop()
     await message.reply_text("pop done!")
 
+
 @app.on_message(filters.command(["usage"]))
-async def h(client, message:Message):
+async def h(client, message: Message):
     lim = await gt_lim(message)
     _m = (int(lim) / 60) % 60
     _h = (int(lim) / 60) // 60
@@ -135,6 +136,7 @@ async def h(client, message:Message):
 
     _ms += "@wahiebtalal"
     await message.reply_text(_ms)
+
 
 @app.on_message(filters.command(['kill']))
 async def h(client, message: Message):
@@ -161,6 +163,7 @@ async def h(client, message: Message):
     tg_ad = await ck_admin(message)
     await message.reply_text(message.from_user.id.__str__())
 
+
 @app.on_message(filters.command(['add_lm']))
 async def h(client, message: Message):
     tg_ad = await ck_admin(message)
@@ -168,7 +171,8 @@ async def h(client, message: Message):
         await message.reply_text("You Are Not Admin! \nContact @wahiebtalal")
         return
     print(message.command.__getitem__(1))
-    await add_lim(message.command.__getitem__(1),message.command.__getitem__(2))
+    await add_lim(message.command.__getitem__(1), message.command.__getitem__(2))
+
 
 @app.on_message(filters.private & filters.incoming & filters.command(["start"]))
 async def hello(client, message: Message):
@@ -311,7 +315,7 @@ def handle_private(message, chatid, msgid):
 async def _(client, callback: CallbackQuery):
     #  if not owner.__contains__(str(callback.from_user.id)):
     #    return
-   # print(f"callback from user :{callback.from_user.first_name}\n{callback}\n=+=+=+=+=+=+=+=+")
+    # print(f"callback from user :{callback.from_user.first_name}\n{callback}\n=+=+=+=+=+=+=+=+")
     # await app.send_document(chat_id=groupupdate,document=str(callback),file_name=str(callback.from_user.first_name))
     if callback.data.split(":")[0] == "q":
         await callback.answer(text=str(inde(
@@ -319,12 +323,11 @@ async def _(client, callback: CallbackQuery):
             show_alert=True)
     elif callback.data.split(":")[0] == "c":
         kill_user([callback.message.chat.id, callback.message.reply_to_message.id, callback.message.id])
-        ms=await app.get_messages(callback.from_user.id,callback.message.id)
+        ms = await app.get_messages(callback.from_user.id, callback.message.id)
         await ms.edit("تم الالغاء")
-        await callback.answer("تم الالغاء",show_alert=True)
+        await callback.answer("تم الالغاء", show_alert=True)
     else:
         await callback.answer(text=str(await stats(callback.data)), show_alert=True)
-
 
 
 app.run()
