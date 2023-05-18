@@ -112,12 +112,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_URL = '/static/'
 CSRF_TRUSTED_ORIGINS = ['https://web-production-5502.up.railway.app']
 CORS_ALLOWED_ORIGINS = ['https://web-production-5502.up.railway.app']
 CORS_ALLOW_HEADERS = [
