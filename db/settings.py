@@ -121,7 +121,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 # STATIC_URL = '/static/'
-CSRF_TRUSTED_ORIGINS = ['https://web-production-8bb2.up.railway.app/', 'https://.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-8bb2.up.railway.app', 'https://.127.0.0.1']
+CORS_ALLOW_ALL_ORIGINS = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
