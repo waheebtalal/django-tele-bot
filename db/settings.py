@@ -119,8 +119,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
-CSRF_TRUSTED_ORIGINS = ['https://web-production-5502.up.railway.app']
-CORS_ALLOWED_ORIGINS = ['https://web-production-5502.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-8bb2.up.railway.app']
+CORS_ALLOWED_ORIGINS = ['https://web-production-8bb2.up.railway.app']
 CORS_ALLOW_HEADERS = [
 'accept',
 'accept-encoding',
