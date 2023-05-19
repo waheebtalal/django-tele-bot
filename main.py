@@ -2,6 +2,7 @@ import pyrogram
 from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired
 from pyrogram.types import CallbackQuery
 
+import db.wsgi
 from bot.helper.worker import *
 import time
 import threading
@@ -139,6 +140,15 @@ async def h(client, message: Message):
 
 
 @app.on_message(filters.command(['kill']))
+async def h(client, message: Message):
+    tg_ad = await ck_admin(message)
+    if not tg_ad:
+        await message.reply_text("You Are Not Admin! \nContact @wahiebtalal")
+        return
+    kill()
+    await message.reply_text("Kill done!")
+
+@app.on_message(filters.command(['server']))
 async def h(client, message: Message):
     tg_ad = await ck_admin(message)
     if not tg_ad:

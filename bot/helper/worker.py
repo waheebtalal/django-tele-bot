@@ -8,8 +8,8 @@ import os, django
 
 from bot.helper.ffmpeg_utils import get_thumbnail, get_width_height, get_duration, encode
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "db.settings")
-os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "True")
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "db.settings")
+#os.environ.setdefault("DJANGO_ALLOW_ASYNC_UNSAFE", "True")
 from db import settings
 
 django.setup()
@@ -227,7 +227,8 @@ def kill_user(msg):
 def kill():
     os.system("kill $(pidof /usr/bin/ffmpeg)")
 
-
+def Run_Server():
+    os.system("gunicorn 'db.wsgi'")
 def find(m):
     for a in q:
         if a[0] == m:
