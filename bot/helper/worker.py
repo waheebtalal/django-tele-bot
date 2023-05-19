@@ -106,7 +106,7 @@ async def enc(ls: []):
         thumb = get_thumbnail(video_file, "thumbs//" + str(file.chat.id), 1)
         print("thumb :" + str(thumb))
 
-        enpa = "encode\\" + str(file.chat.id)
+        enpa = "encode/" + str(file.chat.id)
         os.makedirs(enpa, exist_ok=True)
         basefilepath, extension = os.path.splitext(video_file)
         print("basefilepath : " + basefilepath + " | extension : " + extension)
