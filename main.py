@@ -145,16 +145,12 @@ async def h(client, message: Message):
     if not tg_ad:
         await message.reply_text("You Are Not Admin! \nContact @wahiebtalal")
         return
-    Run_Server()
+    kill()
     await message.reply_text("Done")
 
 @app.on_message(filters.command(['server']))
 async def h(client, message: Message):
-    tg_ad = await ck_admin(message)
-    if not tg_ad:
-        await message.reply_text("You Are Not Admin! \nContact @wahiebtalal")
-        return
-    kill()
+    Run_Server()
     await message.reply_text("Kill done!")
 
 
