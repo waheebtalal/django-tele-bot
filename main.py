@@ -193,11 +193,8 @@ async def hello(client, message: Message):
 
 @app.on_message(filters.text)
 async def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    await ck_user(message)
-    # joining chats
-    tg_ad = await ck_admin(message)
-    print(tg_ad)
-    if not tg_ad:
+    
+    if not owner.__contains__(str(message.chat.id)):
         return
     if "https://t.me/+" in message.text or "https://t.me/joinchat/" in message.text:
 
