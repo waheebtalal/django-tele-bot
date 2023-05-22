@@ -193,26 +193,29 @@ async def hello(client, message: Message):
 
 @app.on_message(filters.text)
 async def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    
-    if not owner.__contains__(str(message.chat.id)):
+    await ck_user(message)
+    # joining chats
+    tg_ad = await ck_admin(message)
+    print(tg_ad)
+    if not tg_ad:
         return
     if "https://t.me/+" in message.text or "https://t.me/joinchat/" in message.text:
 
         if acc is None:
-            app.send_message(message.chat.id, f"**String Session is not Set**", reply_to_message_id=message.id)
+            await app.send_message(message.chat.id, f"**String Session is not Set**", reply_to_message_id=message.id)
             return
 
         try:
             try:
                 acc.join_chat(message.text)
             except Exception as e:
-                app.send_message(message.chat.id, f"**Error** : __{e}__", reply_to_message_id=message.id)
+                await app.send_message(message.chat.id, f"**Error** : __{e}__", reply_to_message_id=message.id)
                 return
-            app.send_message(message.chat.id, "**Chat Joined**", reply_to_message_id=message.id)
+            await app.send_message(message.chat.id, "**Chat Joined**", reply_to_message_id=message.id)
         except UserAlreadyParticipant:
-            app.send_message(message.chat.id, "**Chat alredy Joined**", reply_to_message_id=message.id)
+            await app.send_message(message.chat.id, "**Chat alredy Joined**", reply_to_message_id=message.id)
         except InviteHashExpired:
-            app.send_message(message.chat.id, "**Invalid Link**", reply_to_message_id=message.id)
+            await app.send_message(message.chat.id, "**Invalid Link**", reply_to_message_id=message.id)
 
     # getting message
     elif "https://t.me/" in message.text:
@@ -224,27 +227,27 @@ async def save(client: pyrogram.client.Client, message: pyrogram.types.messages_
         if "https://t.me/c/" in message.text:
             chatid = int("-100" + datas[-2])
             if acc is None:
-                app.send_message(message.chat.id, f"**String Session is not Set**", reply_to_message_id=message.id)
+                await app.send_message(message.chat.id, f"**String Session is not Set**", reply_to_message_id=message.id)
                 return
             try:
                 handle_private(message, chatid, msgid)
             except Exception as e:
-                app.send_message(message.chat.id, f"**Error** : __{e}__", reply_to_message_id=message.id)
+                await app.send_message(message.chat.id, f"**Error** : __{e}__", reply_to_message_id=message.id)
 
         # public
         else:
             username = datas[-2]
-            msg = app.get_messages(username, msgid)
+            msg = await app.get_messages(username, msgid)
             try:
-                app.copy_message(message.chat.id, msg.chat.id, msg.id)
+                await app.copy_message(message.chat.id, msg.chat.id, msg.id)
             except:
                 if acc is None:
-                    app.send_message(message.chat.id, f"**String Session is not Set**", reply_to_message_id=message.id)
+                    await app.send_message(message.chat.id, f"**String Session is not Set**", reply_to_message_id=message.id)
                     return
                 try:
                     handle_private(message, username, msgid)
                 except Exception as e:
-                    app.send_message(message.chat.id, f"**Error** : __{e}__", reply_to_message_id=message.id)
+                    await app.send_message(message.chat.id, f"**Error** : __{e}__", reply_to_message_id=message.id)
 
 
 def handle_private(message, chatid, msgid):
