@@ -251,16 +251,16 @@ async def save(client: pyrogram.client.Client, message: pyrogram.types.messages_
 
 
 def handle_private(message, chatid, msgid):
-    msg = acc.get_messages(chatid, msgid)
+    msg =await acc.get_messages(chatid, msgid)
 
     if "text" in str(msg):
-        app.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
+        await app.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
         return
 
-    smsg = app.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
+    smsg =await app.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
     dosta = threading.Thread(target=lambda: downstatus(f'{message.id}downstatus.txt', smsg), daemon=True)
     dosta.start()
-    file = acc.download_media(msg, progress=progress, progress_args=[message, "down"])
+    file =await acc.download_media(msg, progress=progress, progress_args=[message, "down"])
     os.remove(f'{message.id}downstatus.txt')
 
     upsta = threading.Thread(target=lambda: upstatus(f'{message.id}upstatus.txt', smsg), daemon=True)
@@ -268,53 +268,53 @@ def handle_private(message, chatid, msgid):
 
     if "Document" in str(msg):
         try:
-            thumb = acc.download_media(msg.document.thumbs[0].file_id)
+            thumb =await acc.download_media(msg.document.thumbs[0].file_id)
         except:
             thumb = None
 
-        app.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption,
+        await app.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption,
                           caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress,
                           progress_args=[message, "up"])
         if thumb != None: os.remove(thumb)
 
     elif "Video" in str(msg):
         try:
-            thumb = acc.download_media(msg.video.thumbs[0].file_id)
+            thumb =await acc.download_media(msg.video.thumbs[0].file_id)
         except:
             thumb = None
 
-        app.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width,
+        await app.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width,
                        height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities,
                        reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
         if thumb != None: os.remove(thumb)
 
     elif "Animation" in str(msg):
-        app.send_animation(message.chat.id, file, reply_to_message_id=message.id)
+        await app.send_animation(message.chat.id, file, reply_to_message_id=message.id)
 
     elif "Sticker" in str(msg):
-        app.send_sticker(message.chat.id, file, reply_to_message_id=message.id)
+        await app.send_sticker(message.chat.id, file, reply_to_message_id=message.id)
 
     elif "Voice" in str(msg):
-        app.send_voice(message.chat.id, file, caption=msg.caption, thumb=thumb, caption_entities=msg.caption_entities,
+        await app.send_voice(message.chat.id, file, caption=msg.caption, thumb=thumb, caption_entities=msg.caption_entities,
                        reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
 
     elif "Audio" in str(msg):
         try:
-            thumb = acc.download_media(msg.audio.thumbs[0].file_id)
+            thumb =await acc.download_media(msg.audio.thumbs[0].file_id)
         except:
             thumb = None
 
-        app.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities,
+        await app.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities,
                        reply_to_message_id=message.id, progress=progress, progress_args=[message, "up"])
         if thumb != None: os.remove(thumb)
 
     elif "Photo" in str(msg):
-        app.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities,
+        await app.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities,
                        reply_to_message_id=message.id)
 
     os.remove(file)
     if os.path.exists(f'{message.id}upstatus.txt'): os.remove(f'{message.id}upstatus.txt')
-    app.delete_messages(message.chat.id, [smsg.id])
+    await app.delete_messages(message.chat.id, [smsg.id])
 
 
 @app.on_callback_query()
